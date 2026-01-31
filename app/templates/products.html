@@ -1,0 +1,28 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+    <h1>Product Catalog</h1>
+    <div class="row">
+        {% for product_id, product in products.items() %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">Category: {{ categories[product.category_id] }}</p>
+                        <p class="card-text">Price: \u20b9{{ "%.2f"|format(product.price) }}</p>
+                        <form method="POST" action="{{ url_for('user.add_to_cart', product_id=product_id) }}">
+                            <div class="form-group">
+                                <label for="quantity">Quantity:</label>
+                                <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add to Cart</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

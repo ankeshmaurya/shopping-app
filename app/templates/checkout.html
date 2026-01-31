@@ -1,0 +1,25 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+    <h1>Checkout</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Order Summary</h5>
+            <p class="card-text">Total Amount: \u20b9{{ "%.2f"|format(total_price) }}</p>
+            <form method="POST" action="{{ url_for('user.process_payment') }}">
+                <div class="form-group">
+                    <label for="payment_method">Select Payment Method:</label>
+                    <select class="form-control" id="payment_method" name="payment_method">
+                        <option value="PayPal">PayPal</option>
+                        <option value="Stripe">Stripe</option>
+                        <option value="Direct Transfer">Direct Bank Transfer</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Pay Now</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

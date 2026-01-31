@@ -1,0 +1,15 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Welcome to the Demo Marketplace</h1>
+        <p class="lead">Your one-stop shop for everything.</p>
+        <hr class="my-4">
+        <p>Please login to continue.</p>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('auth.login') }}" role="button">User Login</a>
+        <a class="btn btn-secondary btn-lg" href="{{ url_for('auth.login') }}" role="button">Admin Login</a>
+    </div>
+{% endblock %}
