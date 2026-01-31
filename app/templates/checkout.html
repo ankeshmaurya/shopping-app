@@ -8,7 +8,7 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Order Summary</h5>
-            <p class="card-text">Total Amount: \u20b9{{ "%.2f"|format(total_price) }}</p>
+            <p class="card-text">Total Amount: &#8377;{{ "%.2f"|format(total_price) }}</p>
             <form method="POST" action="{{ url_for('user.process_payment') }}">
                 <div class="form-group">
                     <label for="payment_method">Select Payment Method:</label>

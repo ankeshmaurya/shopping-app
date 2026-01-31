@@ -1,20 +1,22 @@
-/* Custom Styles */
-body {
-    background-color: #f8f9fa;
+
+.product-card {
+    transition: transform .2s;
 }
 
-.navbar-brand {
-    font-weight: bold;
+.product-card:hover {
+    transform: scale(1.05);
 }
 
-.card-header {
-    background-color: #343a40;
-    color: white;
+.product-image-container {
+    height: 200px; /* Or any fixed height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
 
-.jumbotron {
-    background-image: url('https://plus.unsplash.com/premium_photo-1673972238946-9195b64e5f70?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-    background-size: cover;
-    color: white;
-    text-shadow: 2px 2px 4px #000000;
+.product-image {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: cover;
 }

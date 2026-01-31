@@ -1,26 +1,9 @@
 
 from flask import Blueprint, render_template, session, redirect, url_for, flash, request
 from functools import wraps
+from app.config import products_db, categories_db
 
 user = Blueprint('user', __name__)
-
-# Dummy product data
-products_db = {
-    1: {'id': 1, 'name': 'Classic Leather Boots', 'category_id': 1, 'price': 150.00},
-    2: {'id': 2, 'name': 'Winter Wool Coat', 'category_id': 2, 'price': 250.00},
-    3: {'id': 3, 'name': 'Denim Jacket', 'category_id': 3, 'price': 90.00},
-    4: {'id': 4, 'name': 'Baseball Cap', 'category_id': 4, 'price': 25.00},
-    5: {'id': 5, 'name': 'Running Sneakers', 'category_id': 5, 'price': 120.00},
-    6: {'id': 6, 'name': 'Smartwatch', 'category_id': 6, 'price': 300.00}
-}
-categories_db = {
-    1: 'Boots',
-    2: 'Coats',
-    3: 'Jackets',
-    4: 'Caps',
-    5: 'Footwear',
-    6: 'Electronics'
-}
 
 # In-memory cart storage
 carts = {}

@@ -8,15 +8,18 @@
     <div class="row">
         {% for product_id, product in products.items() %}
             <div class="col-md-4 mb-4">
-                <div class="card">
+                <div class="card product-card">
+                    <div class="product-image-container">
+                        <img src="{{ url_for('static', filename=product.image.replace('/static/', '')) }}" class="card-img-top product-image" alt="{{ product.name }}">
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ product.name }}</h5>
                         <p class="card-text">Category: {{ categories[product.category_id] }}</p>
-                        <p class="card-text">Price: \u20b9{{ "%.2f"|format(product.price) }}</p>
+                        <p class="card-text">Price: ₹{{ "%.2f"|format(product.price) }}</p>
                         <form method="POST" action="{{ url_for('user.add_to_cart', product_id=product_id) }}">
                             <div class="form-group">
-                                <label for="quantity">Quantity:</label>
-                                <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1">
+                                <label for="quantity-{{ product_id }}">Quantity:</label>
+                                <input type="number" class="form-control" id="quantity-{{ product_id }}" name="quantity" value="1" min="1">
                             </div>
                             <button type="submit" class="btn btn-primary">Add to Cart</button>
                         </form>

@@ -17,19 +17,19 @@
                 </tr>
             </thead>
             <tbody>
-                {% for item in cart_items.values() %}
+                {% for pid, item in cart_items.items() %}
                     <tr>
                         <td>{{ item['product']['name'] }}</td>
-                        <td>\u20b9{{ "%.2f"|format(item['product']['price']) }}</td>
+                        <td>&#8377;{{ "%.2f"|format(item['product']['price']) }}</td>
                         <td>
-                            <form method="POST" action="{{ url_for('user.update_cart', product_id=item['product']['id']) }}" class="form-inline">
+                            <form method="POST" action="{{ url_for('user.update_cart', product_id=pid) }}" class="form-inline">
                                 <input type="number" name="quantity" value="{{ item['quantity'] }}" min="1" class="form-control-sm" style="width: 60px;">
                                 <button type="submit" class="btn btn-sm btn-primary ml-2">Update</button>
                             </form>
                         </td>
-                        <td>\u20b9{{ "%.2f"|format(item['product']['price'] * item['quantity']) }}</td>
+                        <td>&#8377;{{ "%.2f"|format(item['product']['price'] * item['quantity']) }}</td>
                         <td>
-                            <form method="POST" action="{{ url_for('user.remove_from_cart', product_id=item['product']['id']) }}" style="display:inline;">
+                            <form method="POST" action="{{ url_for('user.remove_from_cart', product_id=pid) }}" style="display:inline;">
                                 <button type="submit" class="btn btn-sm btn-danger">Remove</button>
                             </form>
                         </td>
@@ -38,7 +38,7 @@
             </tbody>
         </table>
         <div class="text-right">
-            <h3>Total: \u20b9{{ "%.2f"|format(total_price) }}</h3>
+            <h3>Total: &#8377;{{ "%.2f"|format(total_price) }}</h3>
             <a href="{{ url_for('user.checkout') }}" class="btn btn-success">Proceed to Checkout</a>
         </div>
     {% else %}

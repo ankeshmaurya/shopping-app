@@ -1,7 +1,9 @@
 
 from flask import Blueprint, render_template, session, redirect, url_for, flash, request
 from functools import wraps
-from app.user.user import products_db, categories_db
+from app.config import products_db, categories_db
+import os
+from werkzeug.utils import secure_filename
 
 admin = Blueprint('admin', __name__)
 
@@ -28,8 +30,17 @@ def add_product():
     category_id = int(request.form['category_id'])
     price = float(request.form['price'])
     
+    image = request.files['image']
+    if image:
+        filename = secure_filename(image.filename)
+        image_path = os.path.join('app', 'static', 'uploads', filename)
+        image.save(image_path)
+        image_url = f'/static/uploads/{filename}'
+    else:
+        image_url = None
+
     new_product_id = max(products_db.keys()) + 1
-    products_db[new_product_id] = {'name': name, 'category_id': category_id, 'price': price}
+    products_db[new_product_id] = {'name': name, 'category_id': category_id, 'price': price, 'image': image_url}
     
     flash(f'Product "{name}" added successfully!', 'success')
     return redirect(url_for('admin.dashboard'))
@@ -42,8 +53,17 @@ def update_product(product_id):
     category_id = int(request.form['category_id'])
     price = float(request.form['price'])
     
+    image = request.files.get('image')
+    if image:
+        filename = secure_filename(image.filename)
+        image_path = os.path.join('app', 'static', 'uploads', filename)
+        image.save(image_path)
+        image_url = f'/static/uploads/{filename}'
+    else:
+        image_url = products_db[product_id]['image']
+
     if product_id in products_db:
-        products_db[product_id] = {'name': name, 'category_id': category_id, 'price': price}
+        products_db[product_id] = {'name': name, 'category_id': category_id, 'price': price, 'image': image_url}
         flash(f'Product ID {product_id} updated successfully!', 'success')
     else:
         flash('Product not found!', 'danger')
@@ -55,6 +75,11 @@ def update_product(product_id):
 def delete_product(product_id):
     """Deletes a product from the catalog."""
     if product_id in products_db:
+        # Delete the image file if it exists
+        image_path = products_db[product_id].get('image')
+        if image_path and os.path.exists(image_path.replace('/static', 'app/static', 1)):
+            os.remove(image_path.replace('/static', 'app/static', 1))
+
         del products_db[product_id]
         flash(f'Product ID {product_id} deleted successfully!', 'success')
     else:
